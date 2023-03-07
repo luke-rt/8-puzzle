@@ -1,4 +1,5 @@
 public class Solver {
+    private MinPQ<Board> pq;
     public Solver(Board initial){
 
     }           // find a solution to the initial board (using the A* algorithm)
