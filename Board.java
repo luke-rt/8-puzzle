@@ -25,7 +25,14 @@ public class Board {
     }
     
     public int manhattan() {
-        
+        int manhat_dist = 0;
+        for(int i=0; i<this.size(); ++i){
+            for(int e=0; e<this.size(); ++e){
+                int proper_row = (int)Math.floor(board[i][e] / (this.size() + 1));
+                
+            }
+        } 
+        return manhat_dist;
     }                 // sum of Manhattan distances between blocks and goal
     public boolean isGoal() {
 
