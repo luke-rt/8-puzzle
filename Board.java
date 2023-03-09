@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Board {
@@ -5,6 +6,7 @@ public class Board {
     private int moves;
     
     public Board(int[][] blocks){
+        moves = 0;
         board = new int[blocks.length][blocks[0].length];
         for(int i=0; i<blocks.length; ++i){
             for(int e=0; e<blocks[i].length; ++e){
@@ -21,12 +23,17 @@ public class Board {
     public int hamming() {
         // number of blocks out of place
         int incorrect = 0;
-        for(int i = 1; i <= this.size(); ++i) {
-            for(int j = 1; j <= this.size(); ++j) {
-                if(board[i][j] != i+j) ++incorrect;
+        int prop_place_counter = 1;
+        for(int i = 0; i < this.size(); ++i) {
+            for(int j = 0; j < this.size(); ++j) {
+                if(prop_place_counter == this.size() * this.size()) prop_place_counter = 0;
+                if(board[i][j] != prop_place_counter && board[i][j] != 0){
+                    ++incorrect;
+                } 
+                ++prop_place_counter;
             }
         }
-        return incorrect + this.moves;
+        return incorrect;
     }
     
     public int manhattan() {
@@ -68,7 +75,7 @@ public class Board {
             
             if(inversions % 2 == 1) return false;
         }else if(this.size() % 2 == 0){
-
+            
         }
         return false;
     }            // is this board solvable?
@@ -76,8 +83,37 @@ public class Board {
     public boolean equals(Object y) {
         return y.equals(board);
     }        // does this board equal y?
+    
+    public void make_move(int empty_pos_row, int empty_pos_col, Board search_node){
+        if(empty_pos_row == 0) {
+            this.board[empty_pos_row][empty_pos_col] = this.board[empty_pos_row+1][empty_pos_col];
+            copy[empty_pos_row][empty_pos_col] = copy[empty_pos_row+1][empty_pos_col];
+            // can only move number on bottom
+            neighbor_boards.add();
+        }
+        if(empty_pos_row == this.size()-1){
+            // can only move number on the top 
+        }
+        if(empty_pos_col == 0) {
+            // can only move number on right 
+        }
+        if(empty_pos_col == this.size()-1){
+            // can only move number on the left 
+        }
+    }
 
     public Iterable<Board> neighbors() {
+        ArrayList<Board> neighbor_boards = new ArrayList<>();
+        int empty_pos_row = 0, empty_pos_col = 0;
+        for(int i=0; i<this.size(); ++i){
+            for(int j=0; j<this.size(); ++j){
+                if(board[i][j] == 0){
+                    empty_pos_row = i;
+                    empty_pos_col = j;
+                } 
+            }
+        }
+
         return null;
     }     // all neighboring boards
 
@@ -102,6 +138,7 @@ public class Board {
             for (int j = 0; j < N; j++)
                 blocks[i][j] = in.nextInt();
         Board initial = new Board(blocks);
+        System.out.println();
 
         // check if puzzle is solvable; if so, solve it and output solution
         if (initial.isSolvable()) {
@@ -112,7 +149,21 @@ public class Board {
             }
         }
     
+        System.out.println(initial.hamming());
         System.out.println(initial.manhattan());
         System.out.println(initial);
     }
 }
+
+/*
+3
+8
+1
+3
+4
+0
+2
+7
+6
+5
+ */
