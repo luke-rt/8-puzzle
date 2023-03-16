@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
 
+import javax.naming.InitialContext;
+
 class Node implements Comparable<Node>{
     private Board b;
     private int moves;
@@ -40,14 +42,34 @@ public class Solver {
 
     }                     // min number of moves to solve initial board
     
-    public void helper(Node node) {
+    public Node helper(Node node) {
         pq.insert(node);
         for(Board b : node.getBoard().neighbors()){
+            if(node.getBoard().equals(initNode.getBoard())){
+                continue;
+            }
             pq.insert(new Node(b, node.getMoves()+1));
         }
         
         Node min = pq.delMin();
-        System.out.println(min.getPriority());
+        if(min.getBoard().isGoal() || min.getMoves()==3){
+            outputHelper(min); 
+            return min;
+        }else{
+            return helper(min);
+        }
+    }
+    
+    public void outputHelper(Node min){
+        System.out.println(min.getPriority() + " moves: " + min.getMoves());
+        Board b = min.getBoard();
+        for(int i=0; i<b.getBoard().length; ++i){
+            for(int e=0; e<b.getBoard().length; ++e){
+                System.out.print(b.getBoard()[i][e]);
+            }
+            System.out.println();
+        }
+        System.out.println(pq.size());
     }
 
     public Iterable<Board> solution(){
@@ -69,3 +91,16 @@ public class Solver {
         s.solution();
     } // solve a slider puzzle (given below) 
 }
+
+/*
+ 3
+ 0
+ 1
+ 3
+ 4
+ 2
+ 5
+ 7
+ 8
+ 6
+ */
