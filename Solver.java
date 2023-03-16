@@ -14,7 +14,8 @@ public class Solver {
         for(Board b1 : b.neighbors()){
             for(Board b2 : b1.neighbors()) {
                 if(!b2.equals(b)){
-
+                    pq.insert(b2);
+                    pq.delMin();
                 }
             }
         }
