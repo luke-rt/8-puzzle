@@ -28,12 +28,13 @@ class Node implements Comparable<Node>{
 
 public class Solver {
     
-    
+    private ArrayList<Node> already_visited;
     private MinPQ<Node> pq;
     private Node initNode;
     public Solver(Board initial){
         pq = new MinPQ<Node>();
         initNode = new Node(initial, 0);
+        already_visited = new ArrayList<Node>();
     }           // find a solution to the initial board (using the A* algorithm)
 
     public int moves(){
@@ -45,13 +46,15 @@ public class Solver {
     public Node helper(Node node) {
         pq.insert(node);
         for(Board b : node.getBoard().neighbors()){
-            if(!node.getBoard().equals(initNode.getBoard())){
-                pq.insert(new Node(b, node.getMoves()+1));
+            Node neighbor = new Node(b, node.getMoves()+1);
+            if(!neighbor.getBoard().equals(initNode.getBoard()) && !already_visited.contains(neighbor)){
+                pq.insert(neighbor);
+                already_visited.add(neighbor);
             }
         }
         
         Node min = pq.delMin();
-        if(min.getBoard().isGoal() || min.getMoves()==2){
+        if(min.getBoard().isGoal()){
             outputHelper(min); 
             return min;
         }else{

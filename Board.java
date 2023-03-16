@@ -67,7 +67,14 @@ public class Board {
     }                 // sum of Manhattan distances between blocks and goal
 
     public boolean isGoal() {
-        return manhattan() == 0; // if manhattan is 0, then board is proper goal
+        System.out.println(manhattan());
+        int[][] goal = {{1,2,3}, {4,5,6}, {7,8,0}};
+        for(int i=0; i<goal.length; ++i){
+            for(int e=0; e<goal.length; ++e){
+                if(goal[i][e] != this.board[i][e]) return false;
+            }
+        }
+        return true;
     }                // is this board the goal board?
 
     public boolean isSolvable(){
@@ -206,6 +213,9 @@ public class Board {
         for(Board b : initial.neighbors()){
             System.out.println(b);
         }
+        
+        
+        System.out.println(initial.isGoal());
     }
 }
 
@@ -220,4 +230,18 @@ public class Board {
  7
  8
  6
+ */
+
+
+/*
+ 3
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 0
  */
