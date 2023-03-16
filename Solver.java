@@ -45,14 +45,13 @@ public class Solver {
     public Node helper(Node node) {
         pq.insert(node);
         for(Board b : node.getBoard().neighbors()){
-            if(node.getBoard().equals(initNode.getBoard())){
-                continue;
+            if(!node.getBoard().equals(initNode.getBoard())){
+                pq.insert(new Node(b, node.getMoves()+1));
             }
-            pq.insert(new Node(b, node.getMoves()+1));
         }
         
         Node min = pq.delMin();
-        if(min.getBoard().isGoal() || min.getMoves()==3){
+        if(min.getBoard().isGoal() || min.getMoves()==2){
             outputHelper(min); 
             return min;
         }else{
