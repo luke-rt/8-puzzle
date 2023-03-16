@@ -84,10 +84,11 @@ public class Board {
         return y.equals(board);
     }        // does this board equal y?
     
-    public void make_move(int empty_pos_row, int empty_pos_col, Board search_node){
+    public void make_move(int empty_pos_row, int empty_pos_col){
+
+        ArrayList<Board> neighbor_boards = new ArrayList<>();
         if(empty_pos_row == 0) {
             this.board[empty_pos_row][empty_pos_col] = this.board[empty_pos_row+1][empty_pos_col];
-            copy[empty_pos_row][empty_pos_col] = copy[empty_pos_row+1][empty_pos_col];
             // can only move number on bottom
             neighbor_boards.add();
         }
@@ -114,7 +115,7 @@ public class Board {
             }
         }
 
-        return null;
+        return neighbor_boards;
     }     // all neighboring boards
 
     public String toString() {
