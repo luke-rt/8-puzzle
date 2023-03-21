@@ -31,11 +31,14 @@ public class Solver {
     private ArrayList<Node> already_visited;
     private MinPQ<Node> pq;
     private Node initNode;
+    private ArrayList<Node> sol_set;
     public Solver(Board initial){
         pq = new MinPQ<Node>();
         initNode = new Node(initial, 0);
         already_visited = new ArrayList<Node>();
-    }           // find a solution to the initial board (using the A* algorithm)
+        already_visited.add(initNode);
+        sol_set = new ArrayList<Node>();
+    }           // find a solution to the initial board (using the A* algorithm);
 
     public int moves(){
         
@@ -43,23 +46,30 @@ public class Solver {
 
     }                     // min number of moves to solve initial board
     
-    public Node helper(Node node) {
+    public ArrayList<Node> helper(Node node) {
         pq.insert(node);
         for(Board b : node.getBoard().neighbors()){
             Node neighbor = new Node(b, node.getMoves()+1);
-            if(!neighbor.getBoard().equals(initNode.getBoard()) && !already_visited.contains(neighbor)){
+            boolean already_ = false;
+            /* 
+            for(Node n : already_visited){
+                if(neighbor.getBoard().equals(n.getBoard())) already_ = true;
+            }
+            */
+            ///if(already_ == false){
                 pq.insert(neighbor);
                 already_visited.add(neighbor);
-            }
+            //}
         }
         
         Node min = pq.delMin();
+        sol_set.add(min);
         if(min.getBoard().isGoal()){
-            outputHelper(min); 
-            return min;
-        }else{
-            return helper(min);
+            System.out.println("FOUND GOAL");
+            return sol_set;
         }
+        
+        return helper(min);
     }
     
     public void outputHelper(Node min){
@@ -76,7 +86,9 @@ public class Solver {
 
     public Iterable<Board> solution(){
         ArrayList<Board> empty = new ArrayList<>();
-        helper(initNode);
+        for(Node node : helper(initNode)){
+            System.out.println(node.getBoard());
+        }
         return empty;
     }      // sequence of boards in a shortest solution
 

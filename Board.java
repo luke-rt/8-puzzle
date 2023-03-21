@@ -55,11 +55,12 @@ public class Board {
                 if(board[row][col] != 0){
                     int proper_row = board[row][col] / this.size();
                     int proper_col = (board[row][col] % this.size()) - 1;
-                    if(board[row][col] == this.size()){
+                    if(board[row][col] % this.size() == 0){
                         proper_row--;
                         proper_col += this.size();
                     }
                     manhat_dist += Math.abs(row - proper_row) + Math.abs(col - proper_col);
+                    //System.out.println(board[row][col] + " is displaced " + manhat_dist);
                 }
             }
         } 
@@ -67,14 +68,10 @@ public class Board {
     }                 // sum of Manhattan distances between blocks and goal
 
     public boolean isGoal() {
-        System.out.println(manhattan());
-        int[][] goal = {{1,2,3}, {4,5,6}, {7,8,0}};
-        for(int i=0; i<goal.length; ++i){
-            for(int e=0; e<goal.length; ++e){
-                if(goal[i][e] != this.board[i][e]) return false;
-            }
+        if(manhattan() == 0){
+            return true;
         }
-        return true;
+        return false;
     }                // is this board the goal board?
 
     public boolean isSolvable(){
@@ -198,24 +195,27 @@ public class Board {
         Board initial = new Board(blocks);
 
         // check if puzzle is solvable; if so, solve it and output solution
+        /* 
         if (initial.isSolvable()) {
             Solver solver = new Solver(initial);
             System.out.println("Minimum number of moves = " + solver.moves());
             for (Board board : solver.solution()){
                 System.out.println(board);
             }
-        }
+        }*/
     
         System.out.println();
         System.out.println(initial);
-        System.out.println(initial.hamming());
-        System.out.println(initial.manhattan());
+        // System.out.println(initial.hamming());
+        System.out.println("Manhatt: " + initial.manhattan());
         for(Board b : initial.neighbors()){
+            System.out.println("Neightbor:");
             System.out.println(b);
         }
         
         
-        System.out.println(initial.isGoal());
+        // int[][] goal = {{1,2,3}, {4,5,6}, {7,8,0}};
+        System.out.println("IS goal: " + initial.isGoal());
     }
 }
 
@@ -245,3 +245,16 @@ public class Board {
  8
  0
  */
+
+ /*
+ 3
+ 1
+ 2
+ 3
+ 4
+ 5
+ 0
+ 7
+ 8
+ 6
+  */
