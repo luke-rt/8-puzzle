@@ -63,7 +63,11 @@ public class Solver {
         }
         
         Node min = pq.delMin();
-        sol_set.add(min);
+        boolean to_add = true;
+        for(Node n : sol_set){
+            if(n.getBoard().equals(min.getBoard())) to_add = false;
+        }
+        if(to_add) sol_set.add(min);
         if(min.getBoard().isGoal()){
             System.out.println("FOUND GOAL");
             return sol_set;
