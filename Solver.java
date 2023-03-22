@@ -31,13 +31,13 @@ public class Solver {
     private ArrayList<Node> already_visited;
     private MinPQ<Node> pq;
     private Node initNode;
-    private ArrayList<Node> sol_set;
+    private ArrayList<Board> sol_set;
     public Solver(Board initial){
         pq = new MinPQ<Node>();
         initNode = new Node(initial, 0);
         already_visited = new ArrayList<Node>();
         already_visited.add(initNode);
-        sol_set = new ArrayList<Node>();
+        sol_set = new ArrayList<Board>();
     }           // find a solution to the initial board (using the A* algorithm);
 
     public int moves(){
@@ -46,11 +46,10 @@ public class Solver {
 
     }                     // min number of moves to solve initial board
     
-    public ArrayList<Node> helper(Node node) {
+    public ArrayList<Board> helper(Node node) {
         pq.insert(node);
         for(Board b : node.getBoard().neighbors()){
             Node neighbor = new Node(b, node.getMoves()+1);
-            boolean already_ = false;
             /* 
             for(Node n : already_visited){
                 if(neighbor.getBoard().equals(n.getBoard())) already_ = true;
@@ -64,10 +63,10 @@ public class Solver {
         
         Node min = pq.delMin();
         boolean to_add = true;
-        for(Node n : sol_set){
-            if(n.getBoard().equals(min.getBoard())) to_add = false;
+        for(Board b : sol_set){
+            if(b.equals(min.getBoard())) to_add = false;
         }
-        if(to_add) sol_set.add(min);
+        if(to_add) sol_set.add(min.getBoard());
         if(min.getBoard().isGoal()){
             System.out.println("FOUND GOAL");
             return sol_set;
@@ -89,11 +88,12 @@ public class Solver {
     }
 
     public Iterable<Board> solution(){
-        ArrayList<Board> empty = new ArrayList<>();
-        for(Node node : helper(initNode)){
-            System.out.println(node.getBoard());
+        if(!initNode.getBoard().isSolvable()){
+            System.out.println("Unsolvable");
+            return null;
         }
-        return empty;
+
+        return (Iterable)helper(initNode);
     }      // sequence of boards in a shortest solution
 
     public static void main(String[] args){
@@ -106,7 +106,11 @@ public class Solver {
         Board initial = new Board(blocks);
         Solver s = new Solver(initial);
         
-        s.solution();
+        if(s.solution() != null){
+            for(Board b : s.solution()) {
+                System.out.println(b); 
+            }
+        }
     } // solve a slider puzzle (given below) 
 }
 

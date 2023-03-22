@@ -206,6 +206,7 @@ public class Board {
     
         System.out.println();
         System.out.println(initial);
+        System.out.println("Solvable: " + initial.isSolvable());
         // System.out.println(initial.hamming());
         System.out.println("Manhatt: " + initial.manhattan());
         for(Board b : initial.neighbors()){
