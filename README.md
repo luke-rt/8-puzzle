@@ -11,6 +11,7 @@
  7
  8
  6
+
 0  1  3  
 4  2  5  
 7  8  6  
@@ -80,7 +81,9 @@ Output 2:
 13  14  15  0  
 
 Move made: 5
+
 ============
+
 Output 3:
 3
 1
@@ -94,7 +97,9 @@ Output 3:
 0
 
 Unsolvable
+
 ============
+
 How our program works:
 Using a priority queue, we wrap a Board object inside of a Node class. This Node class provides us
 the ability to combine Board's manhattan method with the current amount of moves made for a solution branch
