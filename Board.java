@@ -83,10 +83,8 @@ public class Board {
                         for(int col2=0; col2<this.size(); ++col2){
                             if(board[row1][col1] != 0 && board[row2][col2] != 0){
                                 if(board[row1][col1] < board[row2][col2]){
-                                    if(row1 >= row2 && col1 > col2){
+                                    if(row1 > row2 || (row1 == row2 && col1 > col2)){
                                         ++inversions;
-                                        System.out.print(board[row1][col1] + " inverted by " + board[row2][col2] + " ");
-                                        System.out.println(row1 + " : " + col1 + " preceeds " + row2 + " : " + col2);
                                     }
                                 }
                             }
@@ -97,8 +95,18 @@ public class Board {
             
             System.out.println("Inversions: " + inversions);
             if(inversions % 2 == 1) return false;
+            else return true;
         }else if(this.size() % 2 == 0){
-            
+            int blank_row = 0;
+            for(int i=0; i<this.size(); ++i) {
+                for(int j=0; j<this.size(); ++j) {
+                    if(board[i][j] == 0){
+                        blank_row = i;
+                    }
+                }
+            }
+            if(blank_row + inversions % 2 == 1) return true;
+            else return false;
         }
         return false;
     }            // is this board solvable?
