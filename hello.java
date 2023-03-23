@@ -1,6 +1,6 @@
 class hello{
     public static void main(String[] args) {
-        int[] a = {2, 4, 5};
+        int[] a = {2, 4, 5};　
         int[] b = a;
         
         

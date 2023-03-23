@@ -81,14 +81,21 @@ public class Board {
                 for(int col1=0; col1<this.size(); ++col1){
                     for(int row2=0; row2<this.size(); ++row2){
                         for(int col2=0; col2<this.size(); ++col2){
-                            if(board[row1][col1] < board[row2][col2] && (row1 > row2 || col1 > col2)){
-                                ++inversions;
+                            if(board[row1][col1] != 0 && board[row2][col2] != 0){
+                                if(board[row1][col1] < board[row2][col2]){
+                                    if(row1 >= row2 && col1 > col2){
+                                        ++inversions;
+                                        System.out.print(board[row1][col1] + " inverted by " + board[row2][col2] + " ");
+                                        System.out.println(row1 + " : " + col1 + " preceeds " + row2 + " : " + col2);
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
             
+            System.out.println("Inversions: " + inversions);
             if(inversions % 2 == 1) return false;
         }else if(this.size() % 2 == 0){
             
@@ -217,6 +224,7 @@ public class Board {
         
         // int[][] goal = {{1,2,3}, {4,5,6}, {7,8,0}};
         System.out.println("IS goal: " + initial.isGoal());
+        System.out.println(initial.isSolvable());
     }
 }
 
