@@ -41,8 +41,11 @@ public class Solver {
     }           // find a solution to the initial board (using the A* algorithm);
 
     public int moves(){
-        
-        return 0;
+        int cnt=0;
+        for(Board b : solution()){
+            cnt++;
+        }
+        return cnt;
 
     }                     // min number of moves to solve initial board
     
@@ -68,7 +71,6 @@ public class Solver {
         }
         if(to_add) sol_set.add(min.getBoard());
         if(min.getBoard().isGoal()){
-            System.out.println("FOUND GOAL");
             return sol_set;
         }
         
@@ -105,11 +107,13 @@ public class Solver {
                 blocks[i][j] = in.nextInt();
         Board initial = new Board(blocks);
         Solver s = new Solver(initial);
+        System.out.println();
         
         if(s.solution() != null){
             for(Board b : s.solution()) {
                 System.out.println(b); 
             }
+            System.out.println("Move made: " + s.moves());
         }
     } // solve a slider puzzle (given below) 
 }
@@ -126,3 +130,24 @@ public class Solver {
  8
  6
  */
+
+ 
+ /*
+4
+1
+2
+3
+4
+5
+0
+6
+8
+9
+10
+7
+11
+13
+14
+15
+12
+  */

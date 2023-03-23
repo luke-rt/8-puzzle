@@ -93,7 +93,6 @@ public class Board {
                 }
             }
             
-            System.out.println("Inversions: " + inversions);
             if(inversions % 2 == 1) return false;
             else return true;
         }else if(this.size() % 2 == 0){
